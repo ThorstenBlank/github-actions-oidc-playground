@@ -6,7 +6,7 @@ resource "aws_iam_openid_connect_provider" "github_federation" {
   url = "https://token.actions.githubusercontent.com"
 
   client_id_list = [
-    "vstoken.actions.githubusercontent.com|vso:def2860a-d800-4fcb-a6a4-49b1feedfc85",
+    "vstoken.actions.githubusercontent.com|vso:0c595448-ab2c-4c23-9d74-e516be3ebf0e",
   ]
 
   thumbprint_list = ["a031c46782e6e6c662c2c87c76da9aa62ccabd8e"]
