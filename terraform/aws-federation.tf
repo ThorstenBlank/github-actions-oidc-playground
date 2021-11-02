@@ -6,7 +6,8 @@ resource "aws_iam_openid_connect_provider" "github_federation" {
   url = "https://token.actions.githubusercontent.com"
 
   client_id_list = [
-    "vstoken.actions.githubusercontent.com|vso:0c595448-ab2c-4c23-9d74-e516be3ebf0e",
+    // Only this client is required if the official action is used (https://github.com/aws-actions/configure-aws-credentials).
+    "sts.amazonaws.com",
   ]
 
   thumbprint_list = ["a031c46782e6e6c662c2c87c76da9aa62ccabd8e"]
@@ -26,7 +27,7 @@ resource "aws_iam_role" "github_federation_role" {
         }
         Condition = {
           StringLike = {
-            "token.actions.githubusercontent.com:oidc_sub" = "repo:${local.repo_name}:*"
+            "token.actions.githubusercontent.com:sub" = "repo:${local.repo_name}:*"
           }
         }
       },
