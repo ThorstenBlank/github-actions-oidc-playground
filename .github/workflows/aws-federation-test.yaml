@@ -2,18 +2,31 @@ name: AWS Federation Test
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
-  build:
+  terraform-oidc-test:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     steps:
 
-      - name: Configure AWS
+      - name: Configure AWS with Terraform Role
         uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::098906126589:role/GithubFederationRole
+          aws-region: eu-central-1
+
+      - run: aws sts get-caller-identity 
+
+  pulumi-oidc-test:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Configure AWS with Pulumi Role
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: arn:aws:iam::559211460947:role/deploy-role-190771d
           aws-region: eu-central-1
 
       - run: aws sts get-caller-identity 
