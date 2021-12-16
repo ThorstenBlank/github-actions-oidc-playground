@@ -16,13 +16,13 @@ const deployRole = new aws.iam.Role("deploy-role", {
       Action: "sts:AssumeRoleWithWebIdentity",
       Effect: "Allow",
       Principal: { Federated: providerArn },
-      Condition: { StringEquals: { "token.actions.githubusercontent.com:sub": `repo:${repoName}:*` } }
+      Condition: { StringLike: { "token.actions.githubusercontent.com:sub": `repo:${repoName}:*` } }
     }]
   }))
 })
 
 new aws.iam.RolePolicy("deploy-role-policy", {
-  role: deployRole.arn,
+  role: deployRole,
   policy: JSON.stringify({
     Version: "2012-10-17",
     Statement: [{
